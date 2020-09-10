@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
-  "author": "",
+  "author": "unsu0707",
   "license": "ISC",
   "dependencies": {
-    "@slack/bolt": "^2.2.3"
+    "@slack/bolt": "^2.2.3",
+    "lowdb": "1.x"
   }
 }
