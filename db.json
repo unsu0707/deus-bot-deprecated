@@ -1,0 +1,32 @@
+{
+  "env_keywords": {
+    "env": [
+      "dev",
+      "stg",
+      "stgqa01"
+    ],
+    "app": [
+      "web",
+      "api",
+      "admin",
+      "webview",
+      "tr"
+    ]
+  },
+  "env_stats": [
+    {
+      "env": "dev",
+      "app": "web",
+      "user": "UA5067FM5",
+      "started_at": 1598516385666,
+      "branch": "develop"
+    },
+    {
+      "env": "dev",
+      "app": "api",
+      "user": "UA5067FM5",
+      "started_at": 1598855146444,
+      "branch": "develop"
+    }
+  ]
+}
