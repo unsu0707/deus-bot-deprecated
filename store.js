@@ -1,85 +1,97 @@
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
-
+const global = require('./global');
 const adapter = new FileSync('db.json');
 const db = low(adapter);
-const env_keywords = { env: ['dev', 'stg', 'stgqa01'], app: ['web', 'api', 'admin', 'webview', 'tr'] };
+
 
 exports.init = () => {
-  console.log('db init');
-  db.defaults({ env_keywords: env_keywords, env_stats: [] })
+  process.env.TZ = 'Asia/Tokyo';
+  var defaultTables = {};
+  for ( var key in global.STORAGE_NAME) {
+    defaultTables[global.STORAGE_NAME[key]] = [];
+  }
+  db.defaults(defaultTables)
     .write();
-  const db_env_keywords = db.get('env_keywords').value();
-  if (env_keywords.env.join(",") != db_env_keywords.env.join(",") || env_keywords.app.join(",") != db_env_keywords.app.join(",")) {
-    console.log('env_keywords has been changed!');
-    db.set('env_keywords', env_keywords).write();
+}
+/*
+  [ {key: "env", keyword: "dev"}, ]
+*/
+
+exports.getKeywords = (storage_name, key) => {
+  const keywords = db.get(storage_name).filter({ key: key }).value()[0];
+  if (keywords) {
+    return keywords.keywords;
+  } else {
+    return null;
+  }
+}
+//takizawa: UMADXE7MH ito: UB37WDLSC, zoe:UMT06KJSK
+exports.getKeyFromKeyword = (word) => {
+  const keywords = db.get(global.STORAGE_NAME.SUB_KEYWORDS).find({ key: word }).value()
+    || db.get(global.STORAGE_NAME.SUB_KEYWORDS).find(subKeyword => (subKeyword.keywords && subKeyword.keywords.split(", ").includes(word)) ).value();
+  console.log(`${keywords} ${word}`);
+  if (keywords) {
+    return keywords.key;
+  } else {
+    return null;
   }
 }
 
-exports.getEnvKeywords = () => {
-  return env_keywords;
+exports.setKeywords = (storage_name, key, keywords) => {
+  if (this.getKeywords(storage_name, key)) {
+    db.get(storage_name).find({ key: key })
+    .assign({ keywords: keywords })
+    .write();
+  } else {
+    db.get(storage_name).push({ key: key, keywords: keywords }).write();
+  }
+  return true;
+}
+
+exports.getUserData = (storage_name, env, app) => {
+  let current_stat = db.get(storage_name).filter({ env: env, app: app }).sortBy('start_at').value();
+  if (storage_name == global.STORAGE_NAME.ENV_STATS) {
+    return current_stat[0];
+  }
+  return current_stat;
 }
 
 exports.isValidKeywords = (env, app) => {
-  return env_keywords.env.includes(env) && env_keywords.app.includes(app);
+  return global.env_keywords.env.includes(env) && global.env_keywords.app.includes(app);
 }
 
 exports.getValidKeywords = (env, app) => {
-  return `env: ${env_keywords.env.join(',')}, app: ${env_keywords.app.join(',')}`;
+  return `env: ${global.env_keywords.env.join(',')}, app: ${global.env_keywords.app.join(',')}`;
 }
 
-exports.setUser = (env, app, user_id) => {
-  let current_stat = db.get('env_stats').find({ env: env, app: app }).value()
-  console.log(current_stat);
-  if (!current_stat) {
-    db.get('env_stats').push({ env: env, app: app, user: user_id, started_at: Date.now(), branch: null })
-      .write();
+exports.setUser = (storage_name, env, app, params) => {
+  //let current_stat = db.get(storage_name).find({ env: env, app: app }).value()
+  //console.log(current_stat);
+  //if (!current_stat) {
+    let data = Object.assign({ env: env, app: app, start_at: Date.now(), end_at: null, branch: null }, params);
+    db.get(storage_name).push(data).write();
     return true;
-  }
-  return current_stat.user;
+  //}
+  //return current_stat.user;
 }
 
-exports.unsetUser = (env, app) => {
-  db.get('env_stats').remove({ env: env, app: app }).write();
-}
-
-exports.getUserData = (env, app) => {
-  let current_stat = db.get('env_stats').find({ env: env, app: app }).value();
-  if (current_stat) {
-    return [current_stat.user, current_stat.started_at, current_stat.branch];
+exports.unsetUser = (storage_name, env, app, user = null) => {
+  let query = { env: env, app: app }
+  if (user != null) {
+    query = Object.assign(query, { user : user });
   }
+  db.get(storage_name).remove(query).write();
 }
 
 exports.setBranch = (env, app, branch) => {
   console.log(`setBranch called -> ${env}, ${app}, branch: ${branch}`)
-  let current_stat = db.get('env_stats').find({ env: env, app: app }).value();
+  let current_stat = db.get(global.STORAGE_NAME.ENV_STATS).find({ env: env, app: app }).value();
   if (current_stat) {
     console.log(current_stat);
-    db.get('env_stats').find({ env: env, app: app })
+    db.get(global.STORAGE_NAME.ENV_STATS).find({ env: env, app: app })
     .assign({ branch: branch })
     .write();
     return true;
   }
 }
-
-
-/*
-
-// Set some defaults (required if your JSON file is empty)
-db.defaults({ env_keywords: { env: ['unsu', 'tono'], app: ['web', 'api'] }, env_stat: {} })
-  .write()
-
-// Add a post
-db.get('posts')
-  .push({ id: 1, title: 'lowdb is awesome'})
-  .write()
-
-// Set a user using Lodash shorthand syntax
-db.set('user.name', 'typicode')
-  .write()
-  
-// Increment count
-db.update('count', n => n + 1)
-  .write()
-  
-*/

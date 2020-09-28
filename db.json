@@ -1,32 +1,138 @@
 {
-  "env_keywords": {
-    "env": [
-      "dev",
-      "stg",
-      "stgqa01"
-    ],
-    "app": [
-      "web",
-      "api",
-      "admin",
-      "webview",
-      "tr"
-    ]
-  },
   "env_stats": [
     {
       "env": "dev",
       "app": "web",
-      "user": "UA5067FM5",
-      "started_at": 1598516385666,
-      "branch": "develop"
+      "start_at": 1601225398532,
+      "end_at": null,
+      "branch": null,
+      "user": "UA5067FM5"
     },
     {
-      "env": "dev",
+      "env": "stgqa01",
+      "app": "web",
+      "start_at": 1601253877309,
+      "end_at": null,
+      "branch": null,
+      "user": "UMT06KJSK"
+    },
+    {
+      "env": "stgqa01",
       "app": "api",
-      "user": "UA5067FM5",
-      "started_at": 1598855146444,
-      "branch": "develop"
+      "start_at": 1601253879061,
+      "end_at": null,
+      "branch": null,
+      "user": "UMT06KJSK"
+    },
+    {
+      "env": "stgqa01",
+      "app": "admin",
+      "start_at": 1601253879945,
+      "end_at": null,
+      "branch": null,
+      "user": "UMT06KJSK"
+    },
+    {
+      "env": "stgqa01",
+      "app": "webview",
+      "start_at": 1601253881250,
+      "end_at": null,
+      "branch": null,
+      "user": "UMT06KJSK"
+    },
+    {
+      "env": "stgqa01",
+      "app": "transaction",
+      "start_at": 1601253882079,
+      "end_at": null,
+      "branch": null,
+      "user": "UMT06KJSK"
+    },
+    {
+      "env": "stg",
+      "app": "web",
+      "start_at": 1601253888922,
+      "end_at": null,
+      "branch": null,
+      "user": "UB37WDLSC"
+    },
+    {
+      "env": "stg",
+      "app": "api",
+      "start_at": 1601253890381,
+      "end_at": null,
+      "branch": null,
+      "user": "UB37WDLSC"
+    },
+    {
+      "env": "stg",
+      "app": "admin",
+      "start_at": 1601253891172,
+      "end_at": null,
+      "branch": null,
+      "user": "UMADXE7MH"
+    },
+    {
+      "env": "stg",
+      "app": "webview",
+      "start_at": 1601253891994,
+      "end_at": null,
+      "branch": null,
+      "user": "UMADXE7MH"
+    },
+    {
+      "env": "stg",
+      "app": "transaction",
+      "start_at": 1601253892827,
+      "end_at": null,
+      "branch": null,
+      "user": "UNNBK39DJ"
+    }
+  ],
+  "env_wait_stats": [],
+  "env_book_stats": [],
+  "sub_keywords": [
+    {
+      "key": "dev",
+      "keywords": "d"
+    },
+    {
+      "key": "stg",
+      "keywords": "s"
+    },
+    {
+      "key": "web",
+      "keywords": "wb"
+    },
+    {
+      "key": "api",
+      "keywords": "ap"
+    },
+    {
+      "key": "admin",
+      "keywords": "ad"
+    },
+    {
+      "key": "stgqa01",
+      "keywords": "qa01, qa, q"
+    },
+    {
+      "key": "webview",
+      "keywords": "wv"
+    },
+    {
+      "key": "transaction",
+      "keywords": "tr"
+    }
+  ],
+  "keywords": [
+    {
+      "key": "env",
+      "keywords": "dev, stg, stgqa01"
+    },
+    {
+      "key": "app",
+      "keywords": "web, api, admin, webview, transaction"
     }
   ]
 }
