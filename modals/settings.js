@@ -2,8 +2,8 @@ const global = require('../global');
 const store = require('../store');
 
 const setKeywords = () => {
-  let envKeywords = store.getKeywords(global.STORAGE_NAME.KEYWORDS, "env");
-  let appKeywords = store.getKeywords(global.STORAGE_NAME.KEYWORDS, "app");
+  var envKeywords = store.getKeywords(global.STORAGE_NAME.KEYWORDS, "env");
+  var appKeywords = store.getKeywords(global.STORAGE_NAME.KEYWORDS, "app");
   
   return {
     "type": "modal",
@@ -78,7 +78,7 @@ const setKeywords = () => {
 }
 
 const setSubKeywords = () => {
-  let blocks = [
+  var blocks = [
     {
       "type": "section",
       "text": {
@@ -91,11 +91,11 @@ const setSubKeywords = () => {
       "type": "divider"
     }
   ]
-  let envKeywords = store.getKeywords(global.STORAGE_NAME.KEYWORDS, "env");
-  let appKeywords = store.getKeywords(global.STORAGE_NAME.KEYWORDS, "app");
+  var envKeywords = store.getKeywords(global.STORAGE_NAME.KEYWORDS, "env");
+  var appKeywords = store.getKeywords(global.STORAGE_NAME.KEYWORDS, "app");
   
   for ( const env of envKeywords.split(", ") ) {
-    let keywords = store.getKeywords(global.STORAGE_NAME.SUB_KEYWORDS, env);
+    var keywords = store.getKeywords(global.STORAGE_NAME.SUB_KEYWORDS, env);
     blocks.push(
     {
       "type": "input",
@@ -118,7 +118,7 @@ const setSubKeywords = () => {
   });
   
   for ( const app of appKeywords.split(", ") ) {
-    let keywords = store.getKeywords(global.STORAGE_NAME.SUB_KEYWORDS, app);
+    var keywords = store.getKeywords(global.STORAGE_NAME.SUB_KEYWORDS, app);
     blocks.push(
     {
       "type": "input",

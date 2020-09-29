@@ -9,7 +9,7 @@ const app = require('./index');
 const updateView = async(user) => {
   // Intro message - 
   console.log(`${user} visited AppHome`);
-  let blocks = [ 
+  var blocks = [
     {
       type: "section",
       text: {
@@ -25,7 +25,7 @@ const updateView = async(user) => {
   // env stats blocks
   var envKeywords = store.getKeywords(global.STORAGE_NAME.KEYWORDS, "env");
   
-  let statBlocks = [];
+  var statBlocks = [];
   for ( const env of envKeywords.split(", ") ) {
     statBlocks.push({
       "type": "section",
@@ -46,7 +46,7 @@ const updateView = async(user) => {
           "text": `:tonotan_${env}_${app}: *(${env.toUpperCase()}) fril_${app}*`
         }
       });
-      let userData = store.getUserData(global.STORAGE_NAME.ENV_STATS, env, app);
+      var userData = store.getUserData(global.STORAGE_NAME.ENV_STATS, env, app);
       if (!userData) {
         statBlocks.push({
           "type": "section",
@@ -66,16 +66,16 @@ const updateView = async(user) => {
           }
         });
       } else {
-        let start_at = userData.start_at != null ? global.sampleDate(new Date(userData.start_at), 'MM-DD HH:mm') : '';
-        let end_at = userData.end_at != null ? global.sampleDate(new Date(userData.end_at), 'MM-DD HH:mm') : '';
-        let action_text = "次借りる";
-        let action_id = "push_waiting_button";
+        var start_at = userData.start_at != null ? global.sampleDate(new Date(userData.start_at), 'MM-DD HH:mm') : '';
+        var end_at = userData.end_at != null ? global.sampleDate(new Date(userData.end_at), 'MM-DD HH:mm') : '';
+        var action_text = "次借りる";
+        var action_id = "push_waiting_button";
         if (userData.user == user) {
           action_text = "返す";
           action_id = "push_return_button";
         }
-        let usage_text = `使用中 (<@${userData.user}> ${start_at}~${end_at})`;
-        let waitingUserData = store.getUserData(global.STORAGE_NAME.WAITING, env, app);
+        var usage_text = `使用中 (<@${userData.user}> ${start_at}~${end_at})`;
+        var waitingUserData = store.getUserData(global.STORAGE_NAME.WAITING, env, app);
         if (waitingUserData.length > 0) {
           usage_text += `\n待機中 (`;
           for (const [i, value] of waitingUserData.entries()) {
@@ -110,7 +110,7 @@ const updateView = async(user) => {
   blocks = blocks.concat(statBlocks);
   // The final view -
   
-  let view = {
+  var view = {
     type: 'home',
     callback_id: 'home_view',
     title: {

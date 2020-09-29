@@ -50,7 +50,7 @@ exports.setKeywords = (storage_name, key, keywords) => {
 }
 
 exports.getUserData = (storage_name, env, app) => {
-  let current_stat = db.get(storage_name).filter({ env: env, app: app }).sortBy('start_at').value();
+  var current_stat = db.get(storage_name).filter({ env: env, app: app }).sortBy('start_at').value();
   if (storage_name == global.STORAGE_NAME.ENV_STATS) {
     return current_stat[0];
   }
@@ -80,18 +80,13 @@ exports.getValidKeywords = (env, app) => {
 }
 
 exports.setUser = (storage_name, env, app, params) => {
-  //let current_stat = db.get(storage_name).find({ env: env, app: app }).value()
-  //console.log(current_stat);
-  //if (!current_stat) {
-    let data = Object.assign({ env: env, app: app, start_at: Date.now(), end_at: null, branch: null }, params);
-    db.get(storage_name).push(data).write();
-    return true;
-  //}
-  //return current_stat.user;
+  var data = Object.assign({ env: env, app: app, start_at: Date.now(), end_at: null, branch: null }, params);
+  db.get(storage_name).push(data).write();
+  return true;
 }
 
 exports.unsetUser = (storage_name, env, app, user = null) => {
-  let query = { env: env, app: app }
+  var query = { env: env, app: app }
   if (user != null) {
     query = Object.assign(query, { user : user });
   }
@@ -100,7 +95,7 @@ exports.unsetUser = (storage_name, env, app, user = null) => {
 
 exports.setBranch = (env, app, branch) => {
   console.log(`setBranch called -> ${env}, ${app}, branch: ${branch}`)
-  let current_stat = db.get(global.STORAGE_NAME.ENV_STATS).find({ env: env, app: app }).value();
+  var current_stat = db.get(global.STORAGE_NAME.ENV_STATS).find({ env: env, app: app }).value();
   if (current_stat) {
     console.log(current_stat);
     db.get(global.STORAGE_NAME.ENV_STATS).find({ env: env, app: app })

@@ -48,10 +48,10 @@ module.exports = (env, user_id, msg = null) => {
         }
       });
     } else {
-      let start_at = userData.start_at != null ? global.sampleDate(new Date(userData.start_at), 'MM-DD HH:mm') : '';
-      let end_at = userData.end_at != null ? global.sampleDate(new Date(userData.end_at), 'MM-DD HH:mm') : '';
-      let action_text = "次借りる";
-      let action_id = "push_waiting_button";
+      var start_at = userData.start_at != null ? global.sampleDate(new Date(userData.start_at), 'MM-DD HH:mm') : '';
+      var end_at = userData.end_at != null ? global.sampleDate(new Date(userData.end_at), 'MM-DD HH:mm') : '';
+      var action_text = "次借りる";
+      var action_id = "push_waiting_button";
       if (userData.user == user_id) {
         action_text = "返す";
         action_id = "push_return_button";
@@ -59,8 +59,8 @@ module.exports = (env, user_id, msg = null) => {
         action_text = "待機やめる";
         action_id = "push_cancel_button";
       }
-      let usage_text = `使用中 (<@${userData.user}> ${start_at}~${end_at})`;
-      let waitingUserData = store.getUserData(global.STORAGE_NAME.WAITING, env, app);
+      var usage_text = `使用中 (<@${userData.user}> ${start_at}~${end_at})`;
+      var waitingUserData = store.getUserData(global.STORAGE_NAME.WAITING, env, app);
       if (waitingUserData.length > 0) {
         usage_text += `\n待機中 (`;
         for (const [i, value] of waitingUserData.entries()) {
