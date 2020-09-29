@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@slack/bolt": "^2.2.3",
-    "lowdb": "1.x"
+    "lowdb": "1.x",
+    "moment": "^2.28.0"
   }
 }
