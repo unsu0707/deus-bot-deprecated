@@ -14,7 +14,7 @@ module.exports = {
   },
   APP_NAME: 'DEUS',
   STORAGE_NAME: { KEYWORDS: 'keywords', SUB_KEYWORDS: 'sub_keywords', ENV_STATS: 'env_stats', WAITING: 'env_wait_stats', BOOK: 'env_book_stats' },
-  STATUS_CHANNEL_ID: 'CLD76Q5MX',
+  STATUS_CHANNEL_ID: 'C2YSQEABH',
   sampleDate: function sampleDate(date, format) {
     format = format.replace(/YYYY/, date.getFullYear());
     format = format.replace(/MM/, ("0" + (date.getMonth() + 1)).slice(-2));

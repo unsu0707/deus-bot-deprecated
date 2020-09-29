@@ -1,14 +1,6 @@
 {
   "env_stats": [
     {
-      "env": "dev",
-      "app": "web",
-      "start_at": 1601225398532,
-      "end_at": null,
-      "branch": null,
-      "user": "UA5067FM5"
-    },
-    {
       "env": "stgqa01",
       "app": "web",
       "start_at": 1601253877309,
@@ -81,15 +73,56 @@
       "user": "UMADXE7MH"
     },
     {
-      "env": "stg",
-      "app": "transaction",
-      "start_at": 1601253892827,
+      "env": "dev",
+      "app": "web",
+      "start_at": 1601365556942,
+      "end_at": null,
+      "branch": "develop",
+      "user": "USETQT1MK"
+    },
+    {
+      "env": "dev",
+      "app": "admin",
+      "start_at": 1601369784386,
       "end_at": null,
       "branch": null,
-      "user": "UNNBK39DJ"
+      "user": "UK0LK7XR7"
     }
   ],
-  "env_wait_stats": [],
+  "env_wait_stats": [
+    {
+      "env": "dev",
+      "app": "web",
+      "start_at": 1601369006008,
+      "end_at": null,
+      "branch": null,
+      "user": "UA5067FM5"
+    },
+    {
+      "env": "dev",
+      "app": "web",
+      "start_at": 1601369015767,
+      "end_at": null,
+      "branch": null,
+      "user": "UA5067FM5"
+    },
+    {
+      "env": "dev",
+      "app": "web",
+      "start_at": 1601369031967,
+      "end_at": null,
+      "branch": null,
+      "user": "UA5067FM5"
+    },
+    {
+      "env": "dev",
+      "app": "web",
+      "start_at": 1601369033888,
+      "end_at": null,
+      "branch": null,
+      "user": "UA5067FM5"
+    }
+  ],
   "env_book_stats": [],
   "sub_keywords": [
     {

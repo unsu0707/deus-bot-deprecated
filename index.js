@@ -174,6 +174,11 @@ app.action("push_lend_button", async ({ ack, action, body, context, client }) =>
       view_id: body.view.id,
       view: selectActionModal(env, body.user.id, resultMessage.join(""))
     });
+    if (resultMessage[1]) {
+      message.sendEph(client, null, user, resultMessage[1]);
+    } else {
+      message.send(client, null, resultMessage[0]);
+    }
   } catch (e) {
     console.log(e);
     app.error(e);
@@ -192,6 +197,11 @@ app.action("push_waiting_button", async ({ ack, action, body, context, client })
       view_id: body.view.id,
       view: selectActionModal(env, body.user.id, resultMessage.join(""))
     });
+    if (resultMessage[1]) {
+      message.sendEph(client, null, user, resultMessage[1]);
+    } else {
+      message.send(client, null, resultMessage[0]);
+    }
   } catch (e) {
     console.log(e);
     app.error(e);
@@ -219,6 +229,11 @@ app.action("push_return_button", async ({ ack, action, body, context, client }) 
       view_id: body.view.id,
       view: selectActionModal(env, body.user.id, resultMessage.join(""))
     });
+    if (resultMessage[1]) {
+      message.sendEph(client, null, user, resultMessage[1]);
+    } else {
+      message.send(client, null, resultMessage[0]);
+    }
   } catch (e) {
     console.log(e);
     app.error(e);

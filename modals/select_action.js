@@ -83,6 +83,17 @@ module.exports = (env, user_id, msg = null) => {
           "action_id": action_id
         }
       });
+      if (userData.branch) {
+        blocks.push({
+          "type": "context",
+          "elements": [
+            {
+              "type": "mrkdwn",
+              "text": `:clipboard: 現在のブランチ名: ${userData.branch}`
+            }
+          ]
+        });
+      }
     }
   }
   

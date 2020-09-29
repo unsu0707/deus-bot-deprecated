@@ -1,12 +1,22 @@
 const bolt = require('./index');
+const global = require('./global');
 
 const send = async(client, channel, text) => {   
   try {
-    const result = await client.chat.postMessage({
-      token: process.env.SLACK_BOT_TOKEN,
-      channel: channel,
-      text: text,
-    });
+    if (channel) {
+      const result = await client.chat.postMessage({
+        token: process.env.SLACK_BOT_TOKEN,
+        channel: channel,
+        text: text,
+      });
+    }
+    if (channel != global.STATUS_CHANNEL_ID) {
+      const result = await client.chat.postMessage({
+        token: process.env.SLACK_BOT_TOKEN,
+        channel: global.STATUS_CHANNEL_ID,
+        text: text,
+      });
+    }
     
   } catch(e) {
     console.log(e);
