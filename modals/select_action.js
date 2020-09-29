@@ -55,6 +55,9 @@ module.exports = (env, user_id, msg = null) => {
       if (userData.user == user_id) {
         action_text = "返す";
         action_id = "push_return_button";
+      } else if (store.isUsing(global.STORAGE_NAME.WAITING, env, app, user_id)) {
+        action_text = "待機やめる";
+        action_id = "push_cancel_button";
       }
       let usage_text = `使用中 (<@${userData.user}> ${start_at}~${end_at})`;
       let waitingUserData = store.getUserData(global.STORAGE_NAME.WAITING, env, app);

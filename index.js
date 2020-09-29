@@ -39,6 +39,7 @@ app.command('/deus', async ({ ack, command, client }) => {
         result[1] = `/deus lend [env] [app]
   /deus return [env] [app]
   /deus wait [env] [app]
+  /deus cancel [env] [app]
   /deus help
   *Tips* : 私のホーム画面に行くと、使用状況が一つの画面で見れますよ！ :eyes: (Click Me > Click 'Go To App' Menu!)`;
       } else if (cmd[0] == 'setting') {
@@ -69,6 +70,9 @@ app.command('/deus', async ({ ack, command, client }) => {
               break;
             case 'wait':
               result = waitEnv(env, app, user);
+              break;
+            case 'cancel':
+              result = cancelEnv(env, app, user);
               break;
             case 'book':
               //result = bookEnv(env, app, user);
@@ -109,12 +113,20 @@ function waitEnv(env, app, user) {
     if (user == current_user_data.user) {
       msg[1] = `${env}-${app} はすでにあなたが使っています。`;
     } else {
-      var current_waiting_data = store.getUserData(global.STORAGE_NAME.WAITING, env, app)
-      var priority = (typeof current_waiting_data === 'undefined') ? 1 : current_waiting_data.length + 1;
-      if (store.setUser(global.STORAGE_NAME.WAITING, env, app, { user: user })) {
-        msg[0] = `<@${user}>が :tonotan_${env}_${app}: の使用のために待機列に並び初めました。 (${priority}番目のWaiting)`;
+      if (!store.isUsing(global.STORAGE_NAME.WAITING, env, app, user)) {
+        var current_waiting_data = store.getUserData(global.STORAGE_NAME.WAITING, env, app);
+        var priority = (typeof current_waiting_data === 'undefined') ? 1 : current_waiting_data.length + 1;
+        if ( priority <= 3 ) {
+          if (store.setUser(global.STORAGE_NAME.WAITING, env, app, {user: user})) {
+            msg[0] = `<@${user}>が :tonotan_${env}_${app}: の使用のために待機列に並び初めました。 (${priority}番目のWaiting)`;
+          } else {
+            msg[1] = 'error';
+          }
+        } else {
+          msg[1] = `:tonotan_${env}_${app}: の待機列がすでにいっぱいです。（最大３名まで並べる）`;
+        }
       } else {
-        msg[1] = 'error';
+        msg[1] = `あなたはすでに:tonotan_${env}_${app}: の待機列に並んでいます。`;
       }
     }
   } else {
@@ -144,6 +156,18 @@ function returnEnv(env, app, user) {
     }
   } else {
     msg[1] = `${env}-${app} は誰も使っていません。`;
+  }
+  return msg;
+}
+
+function cancelEnv(env, app, user) {
+  var msg = [];
+  var user_waiting_data = store.getWaitingData(env, app, user);
+  if (user_waiting_data) {
+    store.unsetUser(global.STORAGE_NAME.WAITING, env, app, user);
+    msg[1] = `:tonotan_${env}_${app}:の待機をやめました。`;
+  } else {
+    msg[1] = `あなたは :tonotan_${env}_${app}:の待機列に並んでいません。`;
   }
   return msg;
 }
@@ -192,6 +216,29 @@ app.action("push_waiting_button", async ({ ack, action, body, context, client })
     var user = body.user.id;
     var resultMessage = waitEnv(env, app, user);
     
+    const result = await client.views.update({
+      token: context.botToken,
+      view_id: body.view.id,
+      view: selectActionModal(env, body.user.id, resultMessage.join(""))
+    });
+    if (resultMessage[1]) {
+      message.sendEph(client, null, user, resultMessage[1]);
+    } else {
+      message.send(client, null, resultMessage[0]);
+    }
+  } catch (e) {
+    console.log(e);
+    app.error(e);
+  }
+});
+
+app.action("push_cancel_button", async ({ ack, action, body, context, client }) => {
+  await ack();
+  try {
+    var [env, app] = action.block_id.split("_");
+    var user = body.user.id;
+    var resultMessage = cancelEnv(env, app, user);
+
     const result = await client.views.update({
       token: context.botToken,
       view_id: body.view.id,

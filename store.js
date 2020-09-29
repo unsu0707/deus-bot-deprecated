@@ -57,6 +57,20 @@ exports.getUserData = (storage_name, env, app) => {
   return current_stat;
 }
 
+exports.isUsing = (storage_name, env, app, user) => {
+  var current_stat = db.get(storage_name).find({ env: env, app: app, user: user }).value();
+  if (typeof current_stat != "undefined") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+exports.getWaitingData = (env, app, user) => {
+  var current_stat = db.get(global.STORAGE_NAME.WAITING).find({ env: env, app: app, user: user }).value();
+  return current_stat;
+}
+
 exports.isValidKeywords = (env, app) => {
   return global.env_keywords.env.includes(env) && global.env_keywords.app.includes(app);
 }
