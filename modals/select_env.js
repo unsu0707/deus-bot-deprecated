@@ -1,6 +1,20 @@
 const global = require('../global');
+const store = require('../store');
 
 module.exports = () => {
+  var envKeywords = store.getKeywords(global.STORAGE_NAME.KEYWORDS, "env");
+
+  var options = [];
+  for ( const env of envKeywords.split(", ") ) {
+    options.push({
+      "text": {
+        "type": "plain_text",
+        "text": `${env}`,
+        "emoji": true
+      },
+      "value": `${env}`,
+    });
+  }
   const SELECT_ENV_BLOCK = {
     "type": "section",
     "text": {
@@ -15,32 +29,7 @@ module.exports = () => {
         "text": "env",
         "emoji": true
       },
-      "options": [
-        {
-          "text": {
-            "type": "plain_text",
-            "text": "dev",
-            "emoji": true
-          },
-          "value": "dev"
-        },
-        {
-          "text": {
-            "type": "plain_text",
-            "text": "stg",
-            "emoji": true
-          },
-          "value": "stg"
-        },
-        {
-          "text": {
-            "type": "plain_text",
-            "text": "stg-qa01",
-            "emoji": true
-          },
-          "value": "stgqa01"
-        }
-      ]
+      "options": options
     }
   }
 
