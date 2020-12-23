@@ -1,7 +1,7 @@
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const global = require('./global');
-const adapter = new FileSync('db.json');
+const adapter = new FileSync('.data/db.json');
 const db = low(adapter);
 
 
