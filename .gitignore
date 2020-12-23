@@ -1,1 +1,3 @@
-db.json
+/db.json
+/package-lock.json
+/tags.lock
