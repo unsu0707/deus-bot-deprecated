@@ -1,14 +1,13 @@
 {
-  "name": "tonotan-bolt",
+  "name": "deus-bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Slack Bot for managing Development Environment Usage Status",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
   "author": "unsu0707",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@slack/bolt": "^2.2.3",
     "lowdb": "1.x",
